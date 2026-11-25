@@ -455,6 +455,30 @@ img, svg { max-width: 100%; }
   color: #9fb2cc;
 }
 
+/* 模組卡：你會做出（貼齊卡片底部） */
+.module-card .check-list { margin-bottom: 4px; }
+.module-make {
+  margin: auto 0 0;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line-strong);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #e4eefc;
+}
+.module-make span {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(255, 194, 75, 0.14);
+  border: 1px solid rgba(255, 194, 75, 0.4);
+  color: var(--warm);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
 /* 清單樣式 */
 .check-list { list-style: none; }
 .check-list li {
@@ -609,7 +633,7 @@ img, svg { max-width: 100%; }
   color: #cbd9ec;
 }
 
-/* 課表 */
+/* 課程配當總表 */
 .table-wrap {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -618,20 +642,20 @@ img, svg { max-width: 100%; }
   margin-bottom: 24px;
 }
 
-.schedule-table {
+.syllabus-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
-.schedule-table caption { caption-side: top; }
-.schedule-table th,
-.schedule-table td {
-  padding: 14px 18px;
+.syllabus-table caption { caption-side: top; }
+.syllabus-table th,
+.syllabus-table td {
+  padding: 16px 18px;
   text-align: left;
   border-bottom: 1px solid var(--line);
-  vertical-align: middle;
+  vertical-align: top;
 }
-.schedule-table thead th {
+.syllabus-table thead th {
   background: rgba(76, 155, 255, 0.1);
   color: #cfe0f7;
   font-size: 0.85rem;
@@ -639,23 +663,60 @@ img, svg { max-width: 100%; }
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
-.schedule-table tbody tr:last-child td { border-bottom: 0; }
-.schedule-table tbody tr:hover td { background: rgba(76, 155, 255, 0.06); }
-.schedule-table td { color: #dbe6f5; }
-.schedule-table td:nth-child(1) { white-space: nowrap; font-variant-numeric: tabular-nums; }
-.schedule-table td:nth-child(2) { color: var(--muted); }
-.schedule-table td:nth-child(3) { white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; }
-.schedule-table .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
-.schedule-table tfoot th,
-.schedule-table tfoot td {
+.syllabus-table thead th.col-hours { text-align: right; }
+.syllabus-table tbody tr:last-child th,
+.syllabus-table tbody tr:last-child td { border-bottom: 0; }
+.syllabus-table tbody tr:hover th,
+.syllabus-table tbody tr:hover td { background: rgba(76, 155, 255, 0.06); }
+
+.syllabus-table tbody th[scope="row"] {
+  width: 22%;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+.syllabus-table .mod-index {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--teal);
+}
+.syllabus-table td {
+  color: #d3e0f1;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+.syllabus-table .col-hours {
+  width: 11%;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--teal);
+}
+.syllabus-table .col-out { width: 23%; color: #e4eefc; }
+
+.syllabus-table tfoot th,
+.syllabus-table tfoot td {
   background: var(--surface-2);
   border-top: 1px solid var(--line-strong);
   border-bottom: 0;
   color: #ffffff;
   font-weight: 700;
+  letter-spacing: 0.04em;
+  padding-top: 18px;
+  padding-bottom: 18px;
 }
-.schedule-table tfoot th { letter-spacing: 0.06em; }
-.schedule-table tfoot td { color: var(--warm); font-size: 1.05rem; }
+.syllabus-table tfoot td { color: var(--warm); font-size: 1.05rem; }
+
+.syllabus-note {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
 
 .info-grid { margin-top: 20px; }
 .info-card h3 {
@@ -902,6 +963,14 @@ img, svg { max-width: 100%; }
   }
 
   .header-inner { position: relative; }
+
+  /* 平板寬度把總表收窄一點，避免欄位擠成一團 */
+  .syllabus-table th,
+  .syllabus-table td { padding: 13px 12px; }
+  .syllabus-table tbody th[scope="row"] { width: 24%; font-size: 0.92rem; }
+  .syllabus-table td { font-size: 0.86rem; line-height: 1.65; }
+  .syllabus-table .col-hours { width: 12%; font-size: 0.9rem; }
+  .syllabus-table .col-out { width: 22%; }
 }
 
 @media (max-width: 767px) {
@@ -924,26 +993,36 @@ img, svg { max-width: 100%; }
 
   .footer-inner { grid-template-columns: 1fr; gap: 26px; }
 
-  /* 表格轉卡片 */
-  .table-wrap { border: 0; background: transparent; overflow: visible; }
-  .schedule-table,
-  .schedule-table tbody,
-  .schedule-table tfoot,
-  .schedule-table tr,
-  .schedule-table td,
-  .schedule-table th { display: block; width: 100%; }
+  /* 配當總表轉卡片 */
+  .table-wrap { border: 0; background: transparent; overflow: visible; margin-bottom: 18px; }
+  .syllabus-table,
+  .syllabus-table tbody,
+  .syllabus-table tfoot,
+  .syllabus-table tr,
+  .syllabus-table td,
+  .syllabus-table th { display: block; width: 100%; }
 
-  .schedule-table thead { display: none; }
+  .syllabus-table thead { display: none; }
 
-  .schedule-table tbody tr {
+  .syllabus-table tbody tr {
     margin-bottom: 12px;
     padding: 16px 18px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
   }
-  .schedule-table tbody tr:hover td { background: transparent; }
-  .schedule-table td {
+  .syllabus-table tbody tr:hover th,
+  .syllabus-table tbody tr:hover td { background: transparent; }
+
+  .syllabus-table tbody th[scope="row"] {
+    width: auto;
+    padding: 0 0 10px;
+    margin-bottom: 6px;
+    border-bottom: 1px dashed var(--line-strong);
+    font-size: 1.05rem;
+  }
+
+  .syllabus-table tbody td {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -953,7 +1032,7 @@ img, svg { max-width: 100%; }
     font-size: 0.94rem;
     text-align: right;
   }
-  .schedule-table td::before {
+  .syllabus-table tbody td::before {
     content: attr(data-label);
     flex: 0 0 auto;
     color: #8ea3c0;
@@ -961,31 +1040,35 @@ img, svg { max-width: 100%; }
     letter-spacing: 0.06em;
     text-align: left;
   }
-  .schedule-table td:nth-child(1) {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #ffffff;
-    padding-bottom: 8px;
-    margin-bottom: 4px;
-    border-bottom: 1px dashed var(--line-strong);
-    justify-content: flex-start;
-    gap: 10px;
+  /* 長文字欄位改成上下排列，避免左右擠壓 */
+  .syllabus-table tbody td[data-label="主要內容"],
+  .syllabus-table tbody td[data-label="產出"] {
+    display: block;
+    padding: 8px 0 2px;
+    text-align: left;
+    line-height: 1.7;
   }
-  .schedule-table td:nth-child(1)::before { content: none; }
-  .schedule-table td:nth-child(4) { color: #ffffff; font-weight: 600; }
-  .schedule-table .num { text-align: right; }
+  .syllabus-table tbody td[data-label="主要內容"]::before,
+  .syllabus-table tbody td[data-label="產出"]::before {
+    display: block;
+    margin-bottom: 2px;
+  }
+  .syllabus-table .col-hours { width: auto; font-size: 1rem; padding-bottom: 6px; }
+  .syllabus-table .col-out { width: auto; color: #ffffff; font-weight: 600; }
 
-  .schedule-table tfoot tr {
+  .syllabus-table tfoot tr {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: baseline;
     justify-content: space-between;
+    gap: 4px 14px;
     padding: 16px 18px;
     background: var(--surface-2);
     border: 1px solid var(--line-strong);
     border-radius: var(--radius);
   }
-  .schedule-table tfoot th { padding: 0; border: 0; }
-  .schedule-table tfoot td { padding: 0; width: auto; font-size: 1.1rem; }
+  .syllabus-table tfoot th { padding: 0; border: 0; width: auto; }
+  .syllabus-table tfoot td { padding: 0; width: auto; font-size: 1.05rem; }
 
   .cta-band { padding: 24px 22px; }
   .cta-band .btn { width: 100%; }
